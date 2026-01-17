@@ -83,7 +83,7 @@ export default function App() {
       const roomSnap = await getDoc(roomRef);
 
       if (!roomSnap.exists()) {
-        alert("Room not found!");
+        alert("Ruangan tidak ditemukan!");
         return;
       }
 
@@ -91,7 +91,7 @@ export default function App() {
       setIsGameMaster(false);
     } catch (error) {
       console.error("Error joining room:", error);
-      alert("Failed to join room. Please check the code and try again.");
+      alert("Gagal gabung ruangan. Cek kode dan coba lagi.");
     }
   };
 
@@ -115,15 +115,20 @@ export default function App() {
 
   if (!roomCode) {
     return (
-      <div>
-        <RoomSelector
-          playerName={playerName}
-          onCreateRoom={handleCreateRoom}
-          onJoinRoom={handleJoinRoom}
-        />
-        <div style={{ padding: 24, borderTop: "1px solid #ccc" }}>
-          <button onClick={() => setShowLeaderboard(true)}>
-            View Leaderboard
+      <div className="h-screen bg-white flex flex-col">
+        <div className="flex-1">
+          <RoomSelector
+            playerName={playerName}
+            onCreateRoom={handleCreateRoom}
+            onJoinRoom={handleJoinRoom}
+          />
+        </div>
+        <div className="p-6">
+          <button
+            onClick={() => setShowLeaderboard(true)}
+            className="w-full bg-green-500 text-white py-5 rounded-2xl font-bold text-xl"
+          >
+            🏆 Lihat Leaderboard
           </button>
         </div>
       </div>
@@ -131,7 +136,11 @@ export default function App() {
   }
 
   if (!room) {
-    return <div style={{ padding: 24 }}>Loading room...</div>;
+    return (
+      <div className="h-screen bg-white flex items-center justify-center">
+        <p className="text-gray-600 text-xl">Memuat ruangan...</p>
+      </div>
+    );
   }
 
   if (room.status === "waiting") {
