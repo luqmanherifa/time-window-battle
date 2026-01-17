@@ -5,13 +5,14 @@ import {
   onSnapshot,
   collection,
   getDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  getDocs,
 } from "firebase/firestore";
 import { db } from "./firebase";
-import {
-  getPlayerData,
-  savePlayerData,
-  generateRoomCode,
-} from "./utils/player";
+import { getPlayerData, savePlayerData } from "./utils/player";
 import { useGameLogic } from "./hooks/useGameLogic";
 import LoginForm from "./components/LoginForm";
 import RoomSelector from "./components/RoomSelector";
@@ -22,10 +23,12 @@ import Leaderboard from "./components/Leaderboard";
 
 export default function App() {
   const [playerName, setPlayerName] = useState(null);
+  const [originalName, setOriginalName] = useState(null);
   const [roomCode, setRoomCode] = useState(null);
   const [isGameMaster, setIsGameMaster] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const {
     room,
@@ -41,6 +44,7 @@ export default function App() {
     const data = getPlayerData();
     if (data) {
       setPlayerName(data.name);
+      setOriginalName(data.name);
     }
   }, []);
 
@@ -55,26 +59,79 @@ export default function App() {
     });
   }, []);
 
-  const handleLogin = (name) => {
+  const handleLogin = async (name) => {
+    if (originalName && originalName !== name) {
+      await renamePlayer(originalName, name);
+    }
+
     setPlayerName(name);
+    setOriginalName(name);
     savePlayerData({ name });
+    setIsLoggedIn(true);
   };
 
-  const handleCreateRoom = async (roomName) => {
-    const code = generateRoomCode();
+  const renamePlayer = async (oldName, newName) => {
+    try {
+      const oldStatsRef = doc(db, "playerStats", oldName);
+      const oldStatsSnap = await getDoc(oldStatsRef);
 
-    await setDoc(doc(db, "rooms", code), {
-      code: code,
-      roomName: roomName,
-      gameMaster: playerName,
-      status: "waiting",
-      currentQuestion: 0,
-      questionStartAt: null,
-      createdAt: Date.now(),
-    });
+      if (oldStatsSnap.exists()) {
+        const statsData = oldStatsSnap.data();
 
-    setRoomCode(code);
-    setIsGameMaster(true);
+        await setDoc(doc(db, "playerStats", newName), {
+          ...statsData,
+          id: newName,
+          name: newName,
+        });
+
+        await deleteDoc(oldStatsRef);
+      }
+
+      const historyQuery = query(
+        collection(db, "gameHistory"),
+        where("playerId", "==", oldName),
+      );
+      const historySnap = await getDocs(historyQuery);
+
+      const updatePromises = historySnap.docs.map((historyDoc) =>
+        updateDoc(historyDoc.ref, {
+          playerId: newName,
+          playerName: newName,
+        }),
+      );
+
+      await Promise.all(updatePromises);
+    } catch (error) {
+      console.error("Error renaming player:", error);
+    }
+  };
+
+  const handleCreateRoom = async (roomName, code) => {
+    try {
+      const roomRef = doc(db, "rooms", code);
+      const roomSnap = await getDoc(roomRef);
+
+      if (roomSnap.exists()) {
+        alert("Kode ruangan sudah digunakan! Gunakan kode lain.");
+        return;
+      }
+
+      await setDoc(roomRef, {
+        code: code,
+        roomName: roomName,
+        gameMaster: playerName,
+        status: "waiting",
+        currentQuestion: 0,
+        questionStartAt: null,
+        createdAt: Date.now(),
+      });
+
+      setRoomCode(code);
+      setIsGameMaster(true);
+    } catch (error) {
+      console.error("Error creating room:", error);
+      alert("Gagal membuat ruangan. Coba lagi.");
+    }
   };
 
   const handleJoinRoom = async (code) => {
@@ -109,8 +166,8 @@ export default function App() {
     );
   }
 
-  if (!playerName) {
-    return <LoginForm onLogin={handleLogin} />;
+  if (!isLoggedIn) {
+    return <LoginForm onLogin={handleLogin} existingName={originalName} />;
   }
 
   if (!roomCode) {
