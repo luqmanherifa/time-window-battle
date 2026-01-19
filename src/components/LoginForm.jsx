@@ -1,16 +1,30 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import AnimatedIcon from "./AnimatedIcon";
 import { EditIcon } from "./icons";
 
 export default function LoginForm({ onLogin, existingName }) {
   const [playerName, setPlayerName] = useState("");
   const [isRenaming, setIsRenaming] = useState(false);
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
     if (existingName) {
       setPlayerName(existingName);
     }
   }, [existingName]);
+
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setStep(1), 200),
+      setTimeout(() => setStep(2), 600),
+      setTimeout(() => setStep(3), 1000),
+      setTimeout(() => setStep(4), 1400),
+      setTimeout(() => setStep(5), 1800),
+    ];
+
+    return () => timers.forEach(clearTimeout);
+  }, []);
 
   const handleSubmit = () => {
     if (playerName.trim()) {
@@ -28,10 +42,91 @@ export default function LoginForm({ onLogin, existingName }) {
           </div>
         </div>
 
-        {/* Title */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-black text-crimsondeep mb-2">BLINKO!</h1>
-          <p className="text-rosebold text-base">Sekali berkedip, terlewat.</p>
+          <h1 className="text-4xl font-black text-crimsondeep mb-2">
+            <motion.span
+              className="inline-block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: step >= 1 ? 1 : 0,
+                y: step >= 1 ? 0 : 20,
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              BLIN
+            </motion.span>
+
+            <motion.span
+              className="inline-block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: step >= 1 ? 1 : 0,
+                y: step >= 1 ? 0 : 20,
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              K
+            </motion.span>
+
+            {step >= 2 && step < 3 && (
+              <motion.span
+                className="inline-block"
+                initial={{ opacity: 0, x: 10 }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                K
+              </motion.span>
+            )}
+
+            <motion.span
+              className="inline-block"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{
+                opacity: step >= 3 ? 1 : 0,
+                scale: step >= 3 ? 1 : 0.5,
+              }}
+              transition={{
+                duration: 0.5,
+                ease: [0.34, 1.56, 0.64, 1],
+              }}
+            >
+              O
+            </motion.span>
+
+            <motion.span
+              className="inline-block"
+              initial={{ opacity: 0, scale: 0, rotate: -180 }}
+              animate={{
+                opacity: step >= 4 ? 1 : 0,
+                scale: step >= 4 ? 1 : 0,
+                rotate: step >= 4 ? 0 : -180,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 15,
+              }}
+            >
+              !
+            </motion.span>
+          </h1>
+
+          <motion.p
+            className="text-rosebold text-base"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{
+              opacity: step >= 5 ? 1 : 0,
+              y: step >= 5 ? 0 : 10,
+            }}
+            transition={{ duration: 0.5 }}
+          >
+            Sekali berkedip, terlewat.
+          </motion.p>
         </div>
 
         {/* Input Field */}
