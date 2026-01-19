@@ -37,13 +37,13 @@ export default function LoginForm({ onLogin, existingName }) {
       <div className="w-full max-w-sm">
         {/* Logo/Icon */}
         <div className="flex justify-center mb-8">
-          <div className="w-20 h-20 bg-rosebold rounded-3xl flex items-center justify-center border-b-4 border-crimsondeep">
+          <div className="w-20 h-20 bg-indigospark rounded-3xl flex items-center justify-center">
             <AnimatedIcon />
           </div>
         </div>
 
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-black text-crimsondeep mb-2">
+          <h1 className="text-4xl font-black text-indigospark mb-2">
             <motion.span
               className="inline-block"
               initial={{ opacity: 0, y: 20 }}
@@ -117,7 +117,7 @@ export default function LoginForm({ onLogin, existingName }) {
           </h1>
 
           <motion.p
-            className="text-rosebold text-base"
+            className="text-indigoflow text-base"
             initial={{ opacity: 0, y: 10 }}
             animate={{
               opacity: step >= 5 ? 1 : 0,
@@ -143,16 +143,16 @@ export default function LoginForm({ onLogin, existingName }) {
               }}
               className={`w-full px-5 py-4 text-base border-2 rounded-2xl outline-none transition-colors ${
                 existingName && !isRenaming
-                  ? "bg-white border-rosesoft text-crimsondeep"
-                  : "bg-white border-rosesoft focus:border-rosebold"
+                  ? "bg-white border-indigospark/30 text-indigonight"
+                  : "bg-white border-indigospark/30 focus:border-indigospark"
               }`}
             />
             {existingName && !isRenaming && (
               <button
                 onClick={() => setIsRenaming(true)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover:bg-aquamist rounded-xl transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover:bg-yellowpulse/20 rounded-xl transition-colors"
               >
-                <EditIcon className="w-5 h-5 text-rosesoft" />
+                <EditIcon className="w-5 h-5 text-yellowpulse" />
               </button>
             )}
           </div>
@@ -162,7 +162,7 @@ export default function LoginForm({ onLogin, existingName }) {
         {existingName && !isRenaming ? (
           <button
             onClick={handleSubmit}
-            className="w-full bg-rosebold text-white py-4 rounded-2xl font-bold text-base hover:bg-rosesoft active:bg-crimsondeep transition-colors border-b-4 border-crimsondeep"
+            className="w-full bg-indigospark text-white py-4 rounded-2xl font-bold text-base hover:bg-indigoflow active:bg-indigonight transition-colors border-2 border-indigospark"
           >
             Lanjut
           </button>
@@ -170,7 +170,7 @@ export default function LoginForm({ onLogin, existingName }) {
           <div className="space-y-3">
             <button
               onClick={handleSubmit}
-              className="w-full bg-rosebold text-white py-4 rounded-2xl font-bold text-base hover:bg-rosesoft active:bg-crimsondeep transition-colors border-b-4 border-crimsondeep"
+              className="w-full bg-indigospark text-white py-4 rounded-2xl font-bold text-base hover:bg-indigoflow active:bg-indigonight transition-colors border-2 border-indigospark"
             >
               {existingName && isRenaming ? "Simpan" : "Mulai"}
             </button>
@@ -180,7 +180,7 @@ export default function LoginForm({ onLogin, existingName }) {
                   setPlayerName(existingName);
                   setIsRenaming(false);
                 }}
-                className="w-full bg-white text-rosebold py-4 rounded-2xl font-bold text-base hover:bg-aquamist active:bg-blushlight transition-colors border-2 border-rosesoft"
+                className="w-full bg-white text-indigospark py-4 rounded-2xl font-bold text-base hover:bg-yellowpulse/10 active:bg-yellowpulse/20 transition-colors border-2 border-indigospark/30"
               >
                 Batal
               </button>

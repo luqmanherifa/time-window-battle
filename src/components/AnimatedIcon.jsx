@@ -5,7 +5,7 @@ import { BoltIcon, BullseyeIcon, DizzyIcon } from "./icons";
 const ICONS = [BoltIcon, BullseyeIcon, DizzyIcon];
 
 export default function AnimatedIcon({
-  className = "w-11 h-11 text-white",
+  className = "w-11 h-11 text-yellowpulse",
   interval = 1600,
 }) {
   const [index, setIndex] = useState(0);

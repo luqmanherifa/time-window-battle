@@ -49,18 +49,18 @@ export default function RoomSelector({
   return (
     <div className="min-h-screen bg-white flex flex-col p-6">
       {/* Header */}
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex items-start justify-between mb-10">
         <div>
-          <h2 className="text-2xl font-black text-crimsondeep">
+          <h2 className="text-4xl font-black text-indigospark mb-2">
             Halo, {playerName}!
           </h2>
-          <p className="text-rosebold text-sm">Pilih mode permainan</p>
+          <p className="text-indigoflow text-base">Pilih mode permainan</p>
         </div>
         <button
           onClick={onShowLeaderboard}
-          className="w-12 h-12 bg-rosesoft rounded-2xl flex items-center justify-center border-b-4 border-rosebold hover:bg-blushlight active:bg-rosebold transition-colors"
+          className="w-12 h-12 bg-indigospark rounded-2xl flex items-center justify-center hover:bg-indigoflow active:bg-indigonight transition-colors"
         >
-          <TrophyIcon className="w-6 h-6 text-white" />
+          <TrophyIcon className="w-6 h-6 text-yellowpulse" />
         </button>
       </div>
 
@@ -75,14 +75,16 @@ export default function RoomSelector({
                 setErrorCreate("");
                 setErrorJoin("");
               }}
-              className={`flex-1 py-3 rounded-2xl font-bold text-base transition-colors border-b-4 ${
+              className={`flex-1 py-4 rounded-2xl font-bold text-base transition-colors ${
                 activeTab === "create"
-                  ? "bg-rosebold text-white border-crimsondeep"
-                  : "bg-blushlight text-rosebold border-rosesoft"
+                  ? "bg-indigospark text-white"
+                  : "bg-white text-indigospark border-2 border-indigospark/30"
               }`}
             >
               <div className="flex items-center justify-center gap-2">
-                <PlusIcon className="w-5 h-5" />
+                <PlusIcon
+                  className={`w-5 h-5 ${activeTab === "create" ? "text-yellowpulse" : ""}`}
+                />
                 <span>Buat</span>
               </div>
             </button>
@@ -92,14 +94,16 @@ export default function RoomSelector({
                 setErrorCreate("");
                 setErrorJoin("");
               }}
-              className={`flex-1 py-3 rounded-2xl font-bold text-base transition-colors border-b-4 ${
+              className={`flex-1 py-4 rounded-2xl font-bold text-base transition-colors ${
                 activeTab === "join"
-                  ? "bg-rosebold text-white border-crimsondeep"
-                  : "bg-blushlight text-rosebold border-rosesoft"
+                  ? "bg-indigospark text-white"
+                  : "bg-white text-indigospark border-2 border-indigospark/30"
               }`}
             >
               <div className="flex items-center justify-center gap-2">
-                <JoinIcon className="w-5 h-5" />
+                <JoinIcon
+                  className={`w-5 h-5 ${activeTab === "join" ? "text-yellowpulse" : ""}`}
+                />
                 <span>Gabung</span>
               </div>
             </button>
@@ -116,26 +120,31 @@ export default function RoomSelector({
                   setRoomName(e.target.value);
                   setErrorCreate("");
                 }}
-                className="w-full px-5 py-4 text-base border-2 border-rosesoft rounded-2xl focus:border-rosebold outline-none transition-colors"
+                className="w-full px-5 py-4 text-base border-2 border-indigospark/30 rounded-2xl focus:border-indigospark outline-none transition-colors"
               />
-              <input
-                type="text"
-                placeholder="Kode ruangan (min. 4 karakter)"
-                value={createRoomCode}
-                onChange={(e) => {
-                  setCreateRoomCode(e.target.value);
-                  setErrorCreate("");
-                }}
-                className="w-full px-5 py-4 text-base border-2 border-rosesoft rounded-2xl focus:border-rosebold outline-none transition-colors uppercase placeholder:normal-case"
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Kode ruangan"
+                  value={createRoomCode}
+                  onChange={(e) => {
+                    setCreateRoomCode(e.target.value);
+                    setErrorCreate("");
+                  }}
+                  className="w-full px-5 py-4 text-base border-2 border-indigospark/30 rounded-2xl focus:border-indigospark outline-none transition-colors uppercase placeholder:normal-case"
+                />
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-indigospark/50 pointer-events-none">
+                  min. 4
+                </span>
+              </div>
               {errorCreate && (
-                <p className="text-crimsondeep text-sm font-bold px-2">
+                <p className="text-indigospark text-sm font-bold px-2">
                   {errorCreate}
                 </p>
               )}
               <button
                 onClick={handleCreateRoom}
-                className="w-full bg-rosebold text-white py-4 rounded-2xl font-bold text-base hover:bg-rosesoft active:bg-crimsondeep transition-colors border-b-4 border-crimsondeep"
+                className="w-full bg-indigospark text-white py-4 rounded-2xl font-bold text-base hover:bg-indigoflow active:bg-indigonight transition-colors border-2 border-indigospark"
               >
                 Buat Ruangan
               </button>
@@ -153,16 +162,16 @@ export default function RoomSelector({
                   setRoomCode(e.target.value);
                   setErrorJoin("");
                 }}
-                className="w-full px-5 py-4 text-base border-2 border-rosesoft rounded-2xl focus:border-rosebold outline-none transition-colors uppercase placeholder:normal-case"
+                className="w-full px-5 py-4 text-base border-2 border-indigospark/30 rounded-2xl focus:border-indigospark outline-none transition-colors uppercase placeholder:normal-case"
               />
               {errorJoin && (
-                <p className="text-crimsondeep text-sm font-bold px-2">
+                <p className="text-indigospark text-sm font-bold px-2">
                   {errorJoin}
                 </p>
               )}
               <button
                 onClick={handleJoinRoom}
-                className="w-full bg-rosebold text-white py-4 rounded-2xl font-bold text-base hover:bg-rosesoft active:bg-crimsondeep transition-colors border-b-4 border-crimsondeep"
+                className="w-full bg-indigospark text-white py-4 rounded-2xl font-bold text-base hover:bg-indigoflow active:bg-indigonight transition-colors"
               >
                 Gabung Ruangan
               </button>

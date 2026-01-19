@@ -7,11 +7,11 @@ export default {
         sans: ["Work Sans", "sans-serif"],
       },
       colors: {
-        crimsondeep: "#880D1E",
-        rosebold: "#DD2D4A",
-        rosesoft: "#F26A8D",
-        blushlight: "#F49CBB",
-        aquamist: "#CBEEF3",
+        indigonight: "#3D0066", // dark indigo purple
+        indigoflow: "#510087", // mid indigo purple
+        indigospark: "#5C0099", // bright indigo purple
+        yellowpulse: "#FDC500", // strong golden yellow
+        goldflash: "#FFD500", // bright gold yellow
       },
     },
   },

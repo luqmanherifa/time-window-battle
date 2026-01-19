@@ -7,66 +7,56 @@ export default function Leaderboard({ players, onBack }) {
     <div className="min-h-screen bg-white flex items-center justify-center p-6">
       <div className="w-full max-w-md flex flex-col h-[90vh]">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-black text-crimsondeep mb-2">
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-black text-indigospark mb-2">
             Leaderboard
           </h1>
-          <p className="text-rosebold text-base">Peringkat pemain terbaik</p>
+          <p className="text-indigoflow text-base">Peringkat pemain terbaik</p>
         </div>
 
         {/* Leaderboard List */}
-        <div className="flex-1 overflow-y-auto space-y-3 mb-6">
+        <div className="flex-1 overflow-y-auto space-y-2 mb-6">
           {sortedPlayers.length === 0 ? (
             <div className="flex items-center justify-center h-full">
-              <p className="text-rosesoft text-lg">Belum ada data pemain</p>
+              <p className="text-indigospark/50 text-base">
+                Belum ada data pemain
+              </p>
             </div>
           ) : (
             sortedPlayers.map((player, index) => (
               <div
                 key={player.id}
-                className={`rounded-2xl p-5 border-b-4 transition-colors ${
-                  index === 0
-                    ? "bg-rosebold border-crimsondeep"
-                    : index === 1
-                      ? "bg-rosesoft border-rosebold"
-                      : index === 2
-                        ? "bg-blushlight border-rosesoft"
-                        : "bg-white border-2 border-rosesoft"
-                }`}
+                className="rounded-2xl p-4 bg-white border-2 border-gray-200 transition-colors hover:border-indigospark/30"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-4">
-                    <span
-                      className={`text-3xl font-black ${
-                        index < 3 ? "text-white" : "text-rosebold"
-                      }`}
-                    >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <span className="text-xl font-black flex-shrink-0 text-indigospark">
                       #{index + 1}
                     </span>
-                    <span
-                      className={`font-bold text-lg ${
-                        index < 3 ? "text-white" : "text-crimsondeep"
-                      }`}
-                    >
-                      {player.name}
-                    </span>
+                    <div className="min-w-0 flex-1">
+                      <span className="font-bold text-base block truncate text-indigospark">
+                        {player.name}
+                      </span>
+                      <span className="text-xs font-medium block text-gray-500">
+                        {player.gamesPlayed} game •{" "}
+                        {new Date(player.lastPlayed).toLocaleDateString(
+                          "id-ID",
+                          {
+                            day: "numeric",
+                            month: "short",
+                          },
+                        )}
+                      </span>
+                    </div>
                   </div>
-                  <span
-                    className={`text-2xl font-bold flex items-center gap-2 ${
-                      index < 3 ? "text-white" : "text-crimsondeep"
-                    }`}
-                  >
-                    <CrownIcon className="w-6 h-6" />
+                  <div className="text-lg font-bold flex items-center gap-1.5 flex-shrink-0 ml-2 text-indigospark">
+                    <CrownIcon
+                      className={`w-5 h-5 ${
+                        index < 3 ? "text-yellowpulse" : "text-indigospark/50"
+                      }`}
+                    />
                     {player.totalWins}
-                  </span>
-                </div>
-                <div
-                  className={`text-sm font-medium ${
-                    index < 3 ? "text-white" : "text-rosebold"
-                  }`}
-                >
-                  {player.gamesPlayed} game •{" "}
-                  {new Date(player.lastPlayed).toLocaleDateString("id-ID")}
+                  </div>
                 </div>
               </div>
             ))
@@ -76,7 +66,7 @@ export default function Leaderboard({ players, onBack }) {
         {/* Back Button */}
         <button
           onClick={onBack}
-          className="w-full bg-rosebold text-white py-4 rounded-2xl font-bold text-base hover:bg-rosesoft active:bg-crimsondeep transition-colors border-b-4 border-crimsondeep"
+          className="w-full bg-indigospark text-white py-4 rounded-2xl font-bold text-base hover:bg-indigoflow active:bg-indigonight transition-colors border-2 border-indigospark"
         >
           Kembali
         </button>
