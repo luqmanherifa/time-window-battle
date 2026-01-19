@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { SmileIcon, EditIcon } from "./icons";
+import AnimatedIcon from "./AnimatedIcon";
+import { EditIcon } from "./icons";
 
 export default function LoginForm({ onLogin, existingName }) {
   const [playerName, setPlayerName] = useState("");
@@ -23,18 +24,14 @@ export default function LoginForm({ onLogin, existingName }) {
         {/* Logo/Icon */}
         <div className="flex justify-center mb-8">
           <div className="w-20 h-20 bg-rosebold rounded-3xl flex items-center justify-center border-b-4 border-crimsondeep">
-            <SmileIcon className="w-11 h-11 text-white" />
+            <AnimatedIcon />
           </div>
         </div>
 
         {/* Title */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-black text-crimsondeep mb-2">
-            Trivia Game
-          </h1>
-          <p className="text-rosebold text-base">
-            Main kuis bareng teman-teman
-          </p>
+          <h1 className="text-4xl font-black text-crimsondeep mb-2">BLINKO!</h1>
+          <p className="text-rosebold text-base">Sekali berkedip, terlewat.</p>
         </div>
 
         {/* Input Field */}
