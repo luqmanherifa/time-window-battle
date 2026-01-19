@@ -54,7 +54,7 @@ export default function GameFinished({
               {winners.map((w) => (
                 <div
                   key={w.id}
-                  className="bg-white border-2 border-gray-200 rounded-xl p-3 flex items-center justify-between"
+                  className="bg-white border-2 border-slate-200 rounded-xl p-3 flex items-center justify-between"
                 >
                   <p className="text-indigospark text-base font-black">
                     {w.name}
@@ -77,7 +77,7 @@ export default function GameFinished({
             {sortedPlayers.map((p, index) => (
               <div
                 key={p.id}
-                className="rounded-2xl p-4 bg-white border-2 border-gray-200"
+                className="rounded-2xl p-4 bg-white border-2 border-slate-200"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">

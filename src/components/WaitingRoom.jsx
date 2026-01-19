@@ -66,7 +66,7 @@ export default function WaitingRoom({
             {onlinePlayers.map((p) => (
               <div
                 key={p.id}
-                className="bg-white border-2 border-gray-200 rounded-2xl p-3.5 flex items-center justify-between"
+                className="bg-white border-2 border-slate-200 rounded-2xl p-3.5 flex items-center justify-between"
               >
                 <span className="font-bold text-indigospark text-base">
                   {p.name}

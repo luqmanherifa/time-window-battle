@@ -26,7 +26,7 @@ export default function Leaderboard({ players, onBack }) {
             sortedPlayers.map((player, index) => (
               <div
                 key={player.id}
-                className="rounded-2xl p-4 bg-white border-2 border-gray-200 transition-colors"
+                className="rounded-2xl p-4 bg-white border-2 border-slate-200 transition-colors"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -37,7 +37,7 @@ export default function Leaderboard({ players, onBack }) {
                       <span className="font-bold text-base block truncate text-indigospark">
                         {player.name}
                       </span>
-                      <span className="text-xs font-medium block text-gray-500">
+                      <span className="text-xs font-medium block text-slate-500">
                         {player.gamesPlayed} game •{" "}
                         {new Date(player.lastPlayed).toLocaleDateString(
                           "id-ID",

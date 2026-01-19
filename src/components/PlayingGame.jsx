@@ -18,7 +18,7 @@ export default function PlayingGame({
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Score & Timer */}
-      <div className="bg-white px-6 py-4 flex items-center justify-between border-b-2 border-gray-200">
+      <div className="bg-white px-6 py-4 flex items-center justify-between border-b-2 border-slate-200">
         <div className="flex items-center gap-2.5">
           <div className="bg-yellowpulse w-10 h-10 rounded-xl flex items-center justify-center">
             <span className="text-base font-black text-white">
@@ -26,7 +26,7 @@ export default function PlayingGame({
             </span>
           </div>
           <div>
-            <p className="text-gray-500 text-xs font-bold leading-tight">
+            <p className="text-slate-500 text-xs font-bold leading-tight">
               Skor Kamu
             </p>
             <p className="text-indigospark text-xl font-black leading-tight">
@@ -50,25 +50,25 @@ export default function PlayingGame({
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col justify-between px-6 py-8">
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Question Number */}
           <div className="flex justify-center">
-            <div className="bg-gray-100 px-4 py-1.5 rounded-full">
-              <span className="text-xs font-semibold text-gray-600">
+            <div className="bg-slate-100 px-4 py-1.5 rounded-full">
+              <span className="text-xs font-semibold text-slate-600">
                 Soal {room.currentQuestion + 1} dari {QUESTIONS.length}
               </span>
             </div>
           </div>
 
           {/* Question */}
-          <div className="bg-white border-2 border-gray-200 rounded-3xl p-6">
+          <div className="bg-white border-2 border-slate-200 rounded-3xl px-6 py-14">
             <h3 className="text-2xl font-black text-indigospark text-center leading-snug">
               {q.q}
             </h3>
           </div>
 
           {/* Top Live Score */}
-          <div className="border border-gray-200 rounded-xl p-3 mb-6">
+          <div className="border border-slate-300 rounded-xl p-3 mb-6">
             <div className="space-y-2">
               {sortedPlayers.slice(0, 3).map((p, index) => (
                 <div key={p.id} className="flex items-center justify-between">
@@ -76,7 +76,7 @@ export default function PlayingGame({
                     {index === 0 ? (
                       <CrownIcon className="w-4 h-4 text-yellowpulse" />
                     ) : (
-                      <span className="text-xs font-bold w-4 text-center text-gray-400">
+                      <span className="text-xs font-bold w-4 text-center text-slate-400">
                         {index + 1}
                       </span>
                     )}
@@ -84,7 +84,7 @@ export default function PlayingGame({
                       className={`text-sm font-bold truncate max-w-[140px] ${
                         p.id === playerName
                           ? "text-indigospark"
-                          : "text-gray-700"
+                          : "text-slate-700"
                       }`}
                     >
                       {p.name}
@@ -92,7 +92,9 @@ export default function PlayingGame({
                   </div>
                   <span
                     className={`text-sm font-black ${
-                      p.id === playerName ? "text-indigospark" : "text-gray-700"
+                      p.id === playerName
+                        ? "text-indigospark"
+                        : "text-slate-700"
                     }`}
                   >
                     {p.score}
@@ -112,7 +114,7 @@ export default function PlayingGame({
               disabled={answered || timeLeft === 0}
               className={`py-5 rounded-2xl font-bold text-lg border-2 transition-all ${
                 answered || timeLeft === 0
-                  ? "bg-gray-100 text-indigospark border-gray-200 cursor-not-allowed"
+                  ? "bg-slate-100 text-indigospark border-slate-200 cursor-not-allowed"
                   : "bg-indigospark text-white border-indigospark hover:bg-indigoflow hover:border-indigoflow active:scale-[0.98]"
               }`}
             >
