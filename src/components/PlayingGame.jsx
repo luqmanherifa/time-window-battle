@@ -1,5 +1,5 @@
-import { QUESTIONS } from "../constants";
-import { TimerIcon, CrownIcon } from "./icons";
+import { motion, useMotionValue, useTransform } from "framer-motion";
+import { QUESTIONS, QUESTION_DURATION } from "../constants";
 
 export default function PlayingGame({
   room,
@@ -10,113 +10,130 @@ export default function PlayingGame({
   answer,
 }) {
   const q = QUESTIONS[room.currentQuestion];
+
   const sortedPlayers = [...onlinePlayers].sort((a, b) => b.score - a.score);
-  const myPosition = sortedPlayers.findIndex((p) => p.id === playerName) + 1;
-  const myScore = sortedPlayers.find((p) => p.id === playerName)?.score || 0;
-  const isLowTime = timeLeft <= 5;
+
+  const progressMV = useMotionValue(100);
+
+  const barColor = useTransform(progressMV, (v) => {
+    if (v > 60) return "#22c55e";
+    if (v > 30) return "#facc15";
+    return "#ef4444";
+  });
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      {/* Score & Timer */}
-      <div className="bg-white px-6 py-4 flex items-center justify-between border-b-2 border-slate-200">
-        <div className="flex items-center gap-2.5">
-          <div className="bg-yellowpulse w-10 h-10 rounded-xl flex items-center justify-center">
-            <span className="text-base font-extrabold text-white">
-              #{myPosition}
-            </span>
-          </div>
-          <div>
-            <p className="text-slate-500 text-xs font-bold leading-tight">
-              Skor Kamu
-            </p>
-            <p className="text-indigospark text-xl font-extrabold leading-tight">
-              {myScore}
-            </p>
-          </div>
+      {/* Leaderboard */}
+      <div className="border-b border-slate-200 px-6 py-4 bg-white">
+        <div className="flex items-center gap-2 mb-3">
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">
+            Klasemen
+          </p>
         </div>
-        <div
-          className={`px-3.5 py-2 rounded-xl flex items-center gap-2 border-2 transition-all ${
-            isLowTime
-              ? "bg-red-500 border-red-600 animate-pulse"
-              : "bg-indigospark border-indigospark"
-          }`}
-        >
-          <TimerIcon
-            className={`w-4 h-4 ${isLowTime ? "text-white" : "text-yellowpulse"}`}
-          />
-          <span className="font-extrabold text-xl text-white">{timeLeft}</span>
+
+        <div className="max-h-28 overflow-y-auto space-y-1.5 pr-1">
+          {sortedPlayers.map((p, index) => {
+            const isMe = p.id === playerName;
+
+            return (
+              <div
+                key={p.id}
+                className={`flex items-center justify-between px-3 py-2 rounded-lg transition-all
+                  ${
+                    isMe
+                      ? "bg-indigospark/5 border border-indigospark/20"
+                      : "bg-slate-50 border border-slate-100"
+                  }
+                `}
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="w-5 text-xs font-bold text-slate-400">
+                    {index + 1}
+                  </span>
+
+                  <span
+                    className={`truncate max-w-[140px] font-semibold text-sm
+                    ${isMe ? "text-indigospark" : "text-slate-700"}
+                  `}
+                  >
+                    {p.name}
+                  </span>
+
+                  {isMe && (
+                    <span className="text-[9px] font-bold bg-indigospark text-white px-1.5 py-0.5 rounded">
+                      KAMU
+                    </span>
+                  )}
+                </div>
+
+                <span
+                  className={`font-bold text-sm
+                  ${isMe ? "text-indigospark" : "text-slate-600"}
+                `}
+                >
+                  {p.score}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col justify-between px-6 py-8">
-        <div className="space-y-6">
-          {/* Question Number */}
-          <div className="flex justify-center">
-            <div className="bg-slate-100 px-4 py-1.5 rounded-full">
-              <span className="text-xs font-semibold text-slate-600">
-                Soal {room.currentQuestion + 1} dari {QUESTIONS.length}
-              </span>
-            </div>
-          </div>
-
-          {/* Question */}
-          <div className="bg-white border-2 border-slate-200 rounded-3xl px-6 py-12">
-            <h3 className="text-2xl font-extrabold text-indigospark text-center leading-snug">
-              {q.q}
-            </h3>
-          </div>
-
-          {/* Top Live Score */}
-          <div className="border border-slate-200 rounded-xl p-3 mb-6">
-            <div className="space-y-2">
-              {sortedPlayers.slice(0, 3).map((p, index) => (
-                <div key={p.id} className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    {index === 0 ? (
-                      <CrownIcon className="w-4 h-4 text-yellowpulse" />
-                    ) : (
-                      <span className="text-xs font-bold w-4 text-center text-slate-400">
-                        {index + 1}
-                      </span>
-                    )}
-                    <span
-                      className={`text-sm font-bold truncate max-w-[140px] ${
-                        p.id === playerName
-                          ? "text-indigospark"
-                          : "text-slate-700"
-                      }`}
-                    >
-                      {p.name}
-                    </span>
-                  </div>
-                  <span
-                    className={`text-sm font-extrabold ${
-                      p.id === playerName
-                        ? "text-indigospark"
-                        : "text-slate-700"
-                    }`}
-                  >
-                    {p.score}
-                  </span>
-                </div>
-              ))}
-            </div>
+      <div className="flex-1 flex flex-col justify-center px-6 py-8">
+        {/* Timer Indicator */}
+        <div className="mb-6">
+          <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+            <motion.div
+              key={room.currentQuestion}
+              className="h-full"
+              style={{
+                backgroundColor: barColor,
+              }}
+              initial={{ width: "100%" }}
+              animate={{ width: "0%" }}
+              transition={{
+                duration: QUESTION_DURATION / 1000,
+                ease: "linear",
+              }}
+              onUpdate={(latest) => {
+                const percentage = (parseFloat(latest.width) / 100) * 100;
+                progressMV.set(percentage);
+              }}
+            />
           </div>
         </div>
 
-        {/* Answer Buttons */}
-        <div className="grid grid-cols-1 gap-3">
+        {/* Question */}
+        <div className="text-center space-y-2 mb-10">
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">
+            Soal {room.currentQuestion + 1} / {QUESTIONS.length}
+          </p>
+          <h3 className="text-2xl font-extrabold text-indigospark leading-snug">
+            {q.q}
+          </h3>
+        </div>
+
+        {/* Answer Options */}
+        <div className="grid grid-cols-2 gap-4">
           {q.options.map((o) => (
             <button
               key={o}
               onClick={() => answer(o)}
               disabled={answered || timeLeft === 0}
-              className={`py-5 rounded-2xl font-bold text-lg border-2 transition-all ${
-                answered || timeLeft === 0
-                  ? "bg-slate-100 text-indigospark border-slate-200 cursor-not-allowed"
-                  : "bg-indigospark text-white border-indigospark hover:bg-indigoflow hover:border-indigoflow active:scale-[0.98]"
-              }`}
+              className={`
+                aspect-square
+                rounded-3xl
+                flex items-center justify-center
+                font-extrabold text-3xl
+                border-2
+                transition-all
+                ${
+                  answered || timeLeft === 0
+                    ? "bg-slate-100 text-indigospark border-slate-200 cursor-not-allowed"
+                    : "bg-indigospark text-white border-indigospark hover:bg-indigoflow hover:border-indigoflow active:scale-95"
+                }
+              `}
             >
               {o}
             </button>

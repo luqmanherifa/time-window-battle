@@ -9,7 +9,7 @@ export default function Leaderboard({ players, onBack }) {
         {/* Header */}
         <div className="text-center mb-10">
           <h1 className="text-2xl font-extrabold text-indigospark mb-2">
-            Leaderboard
+            Papan Peringkat
           </h1>
           <p className="text-indigoflow text-base">Peringkat pemain terbaik</p>
         </div>
