@@ -83,7 +83,7 @@ export default function PlayingGame({
 
                   {isMe && (
                     <span className="text-[9px] font-bold font-heading bg-indigospark text-white px-1.5 py-0.5 rounded">
-                      KAMU
+                      Kamu
                     </span>
                   )}
                 </div>
@@ -128,7 +128,7 @@ export default function PlayingGame({
 
         {/* Question */}
         <div className="text-center space-y-2 mb-8">
-          <p className="text-xs font-bold font-heading text-slate-400 uppercase tracking-wide">
+          <p className="text-xs font-semibold font-heading text-slate-400 uppercase tracking-wide">
             Soal {room.currentQuestion + 1} / {QUESTIONS.length}
           </p>
           <h3 className="text-2xl font-extrabold font-heading text-indigospark leading-snug">

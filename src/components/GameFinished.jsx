@@ -79,12 +79,12 @@ export default function GameFinished({
             {sortedPlayers.map((p, index) => (
               <div
                 key={p.id}
-                className="rounded-2xl p-4 bg-white border-2 border-slate-200"
+                className="rounded-2xl px-5 py-3 bg-white border-2 border-slate-200"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-5">
                     <span
-                      className={`text-xl font-extrabold font-heading ${
+                      className={`text-lg font-extrabold font-heading ${
                         index < 3 ? "text-yellowpulse" : "text-indigospark"
                       }`}
                     >

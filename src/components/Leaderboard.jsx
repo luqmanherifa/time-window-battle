@@ -28,18 +28,18 @@ export default function Leaderboard({ players, onBack }) {
             sortedPlayers.map((player, index) => (
               <div
                 key={player.id}
-                className="rounded-2xl p-4 bg-white border-2 border-slate-200 transition-colors"
+                className="rounded-2xl px-5 py-3 bg-white border-2 border-slate-200 transition-colors"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <span className="text-xl font-extrabold font-heading flex-shrink-0 text-indigospark">
+                  <div className="flex items-center gap-5 flex-1 min-w-0">
+                    <span className="text-lg font-extrabold font-heading flex-shrink-0 text-yellowpulse">
                       #{index + 1}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <span className="font-bold font-heading text-base block truncate text-indigospark">
+                      <span className="font-bold font-heading text-base block truncate text-indigospark mb-1">
                         {player.name}
                       </span>
-                      <span className="text-xs font-medium block text-slate-500">
+                      <span className="text-xs font-medium block text-slate-400">
                         {player.gamesPlayed} ronde •{" "}
                         {new Date(player.lastPlayed).toLocaleDateString(
                           "id-ID",
@@ -58,7 +58,7 @@ export default function Leaderboard({ players, onBack }) {
 
                     <CrownIcon
                       className={`w-5 h-5 ${
-                        index < 3 ? "text-yellowpulse" : "text-yellowpulse/50"
+                        index < 3 ? "text-yellowpulse" : "text-slate-400"
                       }`}
                     />
                   </div>
