@@ -10,6 +10,7 @@ export default function RoomSelector({
   const [roomCode, setRoomCode] = useState("");
   const [roomName, setRoomName] = useState("");
   const [createRoomCode, setCreateRoomCode] = useState("");
+  const [gameMode, setGameMode] = useState("dontblink");
   const [errorCreate, setErrorCreate] = useState("");
   const [errorJoin, setErrorJoin] = useState("");
   const [activeTab, setActiveTab] = useState("create");
@@ -32,7 +33,11 @@ export default function RoomSelector({
       return;
     }
 
-    onCreateRoom(roomName.trim(), createRoomCode.trim().toUpperCase());
+    onCreateRoom(
+      roomName.trim(),
+      createRoomCode.trim().toUpperCase(),
+      gameMode,
+    );
   };
 
   const handleJoinRoom = () => {
@@ -112,6 +117,37 @@ export default function RoomSelector({
           {/* Create Room Form */}
           {activeTab === "create" && (
             <div className="space-y-4">
+              {/* Game Mode Selector */}
+              <div className="space-y-2">
+                <label className="text-sm font-bold font-heading text-indigospark px-2">
+                  Mode Permainan
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setGameMode("dontblink")}
+                    className={`py-3 px-4 rounded-xl font-bold font-heading text-sm transition-colors ${
+                      gameMode === "dontblink"
+                        ? "bg-indigospark text-white"
+                        : "bg-white text-indigospark border-2 border-indigospark/30 hover:bg-yellowpulse/10"
+                    }`}
+                  >
+                    Don't Blink
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setGameMode("holdbreak")}
+                    className={`py-3 px-4 rounded-xl font-bold font-heading text-sm transition-colors ${
+                      gameMode === "holdbreak"
+                        ? "bg-indigospark text-white"
+                        : "bg-white text-indigospark border-2 border-indigospark/30 hover:bg-yellowpulse/10"
+                    }`}
+                  >
+                    Hold/Break
+                  </button>
+                </div>
+              </div>
+
               <input
                 type="text"
                 placeholder="Nama arena"

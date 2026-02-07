@@ -75,7 +75,7 @@ export default function WaitingRoom({
                       Kamu
                     </span>
                   )}
-                  {p.isGameMaster && (
+                  {p.id === room.gameMaster && (
                     <span className="text-xs bg-indigospark text-white px-3 py-1 rounded-full font-bold font-heading flex items-center gap-1">
                       <CrownIcon className="w-3.5 h-3.5 text-yellowpulse" />
                       Host
